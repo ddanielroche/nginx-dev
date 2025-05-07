@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>Nginx Reverse Proxy</title>
+</head>
+<body>
+    <h1>
+        Nginx Reverse Proxy (Development)
+    </h1>
+    <p>
+        This is a simple Nginx reverse proxy configuration for development purposes.
+    </p>
+    <h2>Example Service Configuration</h2>
+    <p>
+        You can add a new service configuration in the <code>conf.d</code> directory.
+    </p>
+    <p>
+        For example, to add a service running on port 3000, create a file named <code>my_service.conf</code> with the following content:
+    </p>
+    <pre>
+server {
+    listen 80;
+    server_name my_service.dev.local;
+
+    # Redirect all HTTP traffic to HTTPS
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    listen 443 ssl;
+    server_name my_service.dev.local;
+
+    ssl_certificate /etc/nginx/certs/dev.local.crt;
+    ssl_certificate_key /etc/nginx/certs/dev.local.key;
+
+    location / {
+        proxy_pass http://my_service:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+    </pre>
+    <p>
+        After creating the configuration file, you can add the new DNS entry to your <code>/etc/hosts</code> file:
+    </p>
+    <link>
+        Finally, you can access your service at <a href="https://my_service.dev.local">https://my_service.dev.local</a> in your web browser.
+    </p>
+</body>
+</html>

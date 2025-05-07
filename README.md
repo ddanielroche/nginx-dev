@@ -14,7 +14,7 @@ The setup allows you to run multiple local services with HTTPS support without b
 - Run the following command to install mkcert (Debian/Ubuntu), On another system, you can see the official documentation of [mkcert](https://github.com/FiloSottile/mkcert)
 
 ```bash
-sudo apt install mkcert
+make install
 ```
 
 - Generate the local CA and install it in your system's trust store:

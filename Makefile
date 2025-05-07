@@ -22,5 +22,8 @@ restart: ## restart the docker container
 status: ## show the status of the docker container
 	docker compose ps
 
+install: ## install pre-requisites
+	sudo apt install mkcert libnss3-tools
+
 cert: ## create a trust self-signed certificate
 	mkcert -install -key-file certs/dev.local.key.pem -cert-file certs/dev.local.crt.pem dev.local '*.dev.local' 127.0.0.1 ::1
